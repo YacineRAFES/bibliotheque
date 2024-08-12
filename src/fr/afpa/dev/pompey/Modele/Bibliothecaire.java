@@ -38,7 +38,7 @@ public class Bibliothecaire extends Livre {
     }
 
     public void setbiblioNom(String nom) {
-        this.biblioNom = Input.getString(nom);
+        this.biblioNom = nom;
     }
 
     // Gutter et Setter de Prenom de la Bibliothecaire
@@ -47,7 +47,7 @@ public class Bibliothecaire extends Livre {
     }
 
     public void setbiblioPrenom(String prenom) {
-        this.biblioPrenom = Input.getString(prenom);
+        this.biblioPrenom = prenom;
     }
 
     public int getBiblioId() {
@@ -55,7 +55,7 @@ public class Bibliothecaire extends Livre {
     }
 
     public void setBiblioId(int biblioId) {
-        this.biblioId = Integer.parseInt(Input.getInt(String.valueOf(biblioId)));
+        this.biblioId = biblioId;
     }
 
     @Override

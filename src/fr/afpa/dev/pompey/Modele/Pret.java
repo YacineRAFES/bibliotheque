@@ -41,7 +41,7 @@ public class Pret extends Bibliothecaire{
     }
 
     public void setDateDebut(String dateDebut) {
-        this.dateDebut = Input.date(dateDebut);
+        this.dateDebut = dateDebut;
     }
 
     //Gutter et Setter de DateFin
@@ -50,14 +50,13 @@ public class Pret extends Bibliothecaire{
     }
 
     public void setDateFin(String dateFin) {
-        this.dateFin = Input.date(dateFin);
+        this.dateFin = dateFin;
     }
 
     @Override
     public String toString() {
-        return "Pret{" +
-                "dateDebut='" + dateDebut + '\'' +
-                ", dateFin='" + dateFin + '\'' +
-                '}';
+        return "Pret : " +
+                "Le prêt débute le " + getDateDebut() + '\n' +
+                "Le prêt terminera le " + getDateFin() + '\n';
     }
 }

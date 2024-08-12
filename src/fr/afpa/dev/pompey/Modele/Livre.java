@@ -5,7 +5,7 @@ import fr.afpa.dev.pompey.Utilitaires.Input;
 public class Livre extends Abos {
     private String titre;
     private String auteur;
-    private int quantite = 0;
+    private int quantite = 1;
 
     // Constructeur sans paramètre
     public Livre(){
@@ -43,7 +43,7 @@ public class Livre extends Abos {
     }
 
     public void setTitre(String titre) {
-        this.titre = Input.getString(titre);
+        this.titre = titre;
     }
 
     //----------- Gutter et Setter de Auteur -----------
@@ -52,7 +52,7 @@ public class Livre extends Abos {
     }
 
     public void setAuteur(String auteur) {
-        this.auteur = Input.getString(auteur);
+        this.auteur = auteur;
     }
 
     //-----------Gutter et Setter de Quantité -----------
@@ -61,15 +61,14 @@ public class Livre extends Abos {
     }
 
     public void setQuantite(int quantite) {
-        this.quantite = Integer.parseInt(Input.getInt(String.valueOf(quantite)));
+        this.quantite = quantite;
     }
 
     @Override
     public String toString() {
-        return "Livre{" +
-                "titre='" + titre + '\'' +
-                ", auteur='" + auteur + '\'' +
-                ", quantite=" + quantite +
-                '}';
+        return
+                "Le titre du Livre : " + getTitre() + '\n' +
+                "L'auteur du Livre : " + getAuteur() + '\n' +
+                "La quantite : " + getQuantite() + '\n';
     }
 }
