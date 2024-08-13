@@ -10,17 +10,6 @@ public class Livre {
 
     }
 
-    // Constructeur avec Titre, Auteur et Quantite
-    public Livre(String titre, String auteur, int quantite) {
-        this.titre = titre;
-        this.auteur = auteur;
-        this.quantite = quantite;
-    }
-    public Livre(String titre, String auteur) {
-        this.titre = titre;
-        this.auteur = auteur;
-    }
-
     //----------- Gutter et Setter de Titre -----------
     public String getTitre() {
         return titre;

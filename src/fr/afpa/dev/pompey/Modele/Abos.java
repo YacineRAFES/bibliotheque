@@ -14,18 +14,6 @@ public class Abos {
 
     }
 
-    public Abos(String nom, String prenom, String email, LocalDate dateAbos){
-        this.nomAbos = nom;
-        this.prenomAbos = prenom;
-        this.emailAbos = email;
-        this.dateAbos = dateAbos;
-    }
-
-    public Abos(String nom, String prenom) {
-        this.nomAbos = nom;
-        this.prenomAbos = prenom;
-    }
-
     public String getNomAbos() {
         return nomAbos;
     }

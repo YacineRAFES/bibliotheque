@@ -3,7 +3,6 @@ package fr.afpa.dev.pompey.Biblio;
 import fr.afpa.dev.pompey.Modele.Abos;
 import fr.afpa.dev.pompey.Modele.Livre;
 import fr.afpa.dev.pompey.Modele.Pret;
-import fr.afpa.dev.pompey.Utilitaires.MyException;
 import fr.afpa.dev.pompey.Utilitaires.Input;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or

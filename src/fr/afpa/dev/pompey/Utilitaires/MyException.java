@@ -5,15 +5,10 @@ public class MyException extends Exception {
         Input.affichage("Erreur de saisie");
     }
 
-    public MyException(String message){
-        Input.affichage(message);
-    }
-
-
 //    public Exception(String message, Throwable cause){
 //        Input.affichage(message);
 //    }
-    
+
 
 //    public Exception(Throwable cause){
 //        cause.toString();

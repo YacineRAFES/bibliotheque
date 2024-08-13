@@ -10,15 +10,6 @@ public class Pret{
     public Pret(){
     }
 
-    // Constructeur Pret avec dateDebut et dateFin.
-    // Biblio
-    // Livre : titre et auteur.
-    // Abos : Nom et prenom
-    public Pret(LocalDate dateDebut, LocalDate dateFin){
-        this.dateDebut = dateDebut;
-        this.dateFin = dateFin;
-    }
-
     //Gutter et Setter de DateDebut
     public LocalDate getDateDebut() {
         return dateDebut;
