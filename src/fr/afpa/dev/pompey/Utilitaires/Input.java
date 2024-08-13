@@ -26,7 +26,7 @@ public class Input extends MyException {
             System.out.print(message);
             saisie = scan.nextLine();
             if(!saisie.matches(REGEXNOMPRENOM)){
-                affichage("Veuillez re-saisir votre "+ type);
+                affichage("Veuillez re-saisir le "+ type);
             }
         }while(!saisie.matches(REGEXNOMPRENOM));
 
