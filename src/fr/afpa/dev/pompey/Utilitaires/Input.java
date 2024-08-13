@@ -1,10 +1,9 @@
 package fr.afpa.dev.pompey.Utilitaires;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
-public class Input {
+public class Input extends MyException {
     //Gestion de scan
     private static Scanner scan = new Scanner(System.in);
 
@@ -12,19 +11,42 @@ public class Input {
     }
 
     //Liste de REGEX
+    private static final String REGEXNOMPRENOM = "^([a-zA-Z]+[,.]?[ ]?|[a-zA-Z]+[\\'-]?)+$";
     private static final String REGEXDATE = "^-\\d{2}-\\d{2}-\\d{4}$";
-    private static final String REGEXSTRING = "^[A-Za-zÀ-ÖØ-öø-ÿ' -]+$";
+    private static final String REGEXSTRING = "^[a-zA-Z0-9_.-]*$";
+
     private static final String REGEXINT = "^[0-9]+$";
     private static final String REGEXEMAIL = "^(?=.{1,64}@)[\\p{L}0-9\\+_-]+(\\.[\\p{L}0-9\\+_-]+)*@"
             + "[^-][\\p{L}0-9\\+-]+(\\.[\\p{L}0-9\\+-]+)*(\\.[\\p{L}]{2,})$";
 
     //Affichage d'un message et lecture saisie de type de caractère
-    public static String getString(String message){
-        System.out.print(message);
-        return scan.nextLine();
+    public static String verifNomPrenom(String message, String type){
+        String saisie;
+        do{
+            System.out.print(message);
+            saisie = scan.nextLine();
+            if(!saisie.matches(REGEXNOMPRENOM)){
+                affichage("Veuillez re-saisir votre "+ type);
+            }
+        }while(!saisie.matches(REGEXNOMPRENOM));
+
+        return saisie;
     }
 
-    //Affichage d'un message et lecture saisie de email
+    public static String getString(String message){
+        String saisie;
+        do{
+            System.out.print(message);
+            saisie = scan.nextLine();
+            if(!saisie.matches(REGEXSTRING)){
+                affichage("Veuillez re-saisir");
+            }
+        }while(!saisie.matches(REGEXSTRING));
+
+        return saisie;
+    }
+
+    //Affichage d'un message et lecture saisie d'email
     public static String getEmail(String message){
         String saisie;
         do{
@@ -55,20 +77,13 @@ public class Input {
     //Affichage d'un message et lecture saisie de type date
 
     //Création de date actuelle
-    public static String CreateDateNow(){
-        LocalDate dateActuelle = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        String date = formatter.format(dateActuelle);
-        return date;
+    public static LocalDate CreateDateNow(){
+        return LocalDate.now();
     }
 
     //Création de date de fin
-    public static String EndDate(){
-        LocalDate dateActuelle = LocalDate.now();
-        LocalDate dateFin = dateActuelle.plusDays(7);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        String date = formatter.format(dateFin);
-        return date;
+    public static LocalDate EndDate(){
+        return LocalDate.now().plusDays(7);
     }
 
     //Affichage de message

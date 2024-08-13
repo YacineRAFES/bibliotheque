@@ -2,21 +2,23 @@ package fr.afpa.dev.pompey.Modele;
 
 import fr.afpa.dev.pompey.Utilitaires.Input;
 
+import java.time.LocalDate;
+
 public class Abos {
     private String nomAbos;
     private String prenomAbos;
     private String emailAbos;
-    private String dateInscriptionAbos;
+    private LocalDate dateAbos;
 
-    public Abos(){
+    public Abos() {
 
     }
 
-    public Abos(String nom, String prenom, String email, String dateInscription) {
+    public Abos(String nom, String prenom, String email, LocalDate dateAbos){
         this.nomAbos = nom;
         this.prenomAbos = prenom;
         this.emailAbos = email;
-        this.dateInscriptionAbos = dateInscription;
+        this.dateAbos = dateAbos;
     }
 
     public Abos(String nom, String prenom) {
@@ -28,20 +30,22 @@ public class Abos {
         return nomAbos;
     }
 
-    public void setNomAbos(String nom) {
-        this.nomAbos = nom;
+    public void setNomAbos(String nom){
+        if ( nom == null || !nom.isEmpty() ) {
+            this.nomAbos = nom;
+        }
+
     }
 
     public String getPrenomAbos() {
         return prenomAbos;
     }
 
-    public void setPrenomAbos(String prenom) {
-        if(prenom != null && !prenom.isEmpty()){
+    public void setPrenomAbos(String prenom){
+        if ( prenom == null || !prenom.isEmpty() ) {
             this.prenomAbos = prenom;
-        }else{
-            Input.affichage("Veuillez re-saisir votre prénom");
         }
+
     }
 
     public String getEmailAbos() {
@@ -49,15 +53,19 @@ public class Abos {
     }
 
     public void setEmailAbos(String email) {
-        this.emailAbos = email;
+        if (email != null && !email.isEmpty()) {
+            this.emailAbos = email;
+        }else{
+            Input.affichage("Veuillez re-saisir votre email");
+        }
     }
 
-    public String getDateInscriptionAbos() {
-        return dateInscriptionAbos;
+    public LocalDate getDateInscriptionAbos() {
+        return dateAbos;
     }
 
-    public void setDateInscriptionAbos(String dateInscription) {
-        this.dateInscriptionAbos = dateInscription;
+    public void setDateInscriptionAbos(LocalDate dateAbos) {
+        this.dateAbos = dateAbos;
     }
 
     @Override

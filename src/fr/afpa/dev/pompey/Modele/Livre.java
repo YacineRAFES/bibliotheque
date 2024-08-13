@@ -1,8 +1,6 @@
 package fr.afpa.dev.pompey.Modele;
 
-import fr.afpa.dev.pompey.Utilitaires.Input;
-
-public class Livre extends Abos {
+public class Livre {
     private String titre;
     private String auteur;
     private int quantite = 1;
@@ -22,28 +20,17 @@ public class Livre extends Abos {
         this.titre = titre;
         this.auteur = auteur;
     }
-    // Constructeur de Livre avec Titre et Auteur
-    public Livre(String titre, String auteur, String nom, String prenom){
-        super(nom, prenom);
-        this.titre = titre;
-        this.auteur = auteur;
-    }
-
-    // Constructeur de Livre avec Titre, Auteur et Quantité du Livre avec Super Nom et prénom de l'Abos
-    public Livre(String nom, String prenom, String titre, String auteur, int quantite) {
-        super(nom, prenom);
-        this.titre = titre;
-        this.auteur = auteur;
-        this.quantite = quantite;
-    }
 
     //----------- Gutter et Setter de Titre -----------
     public String getTitre() {
         return titre;
     }
 
-    public void setTitre(String titre) {
-        this.titre = titre;
+    public void setTitre(String titre){
+        if ( titre == null || !titre.isEmpty() ) {
+            this.titre = titre;
+        }
+
     }
 
     //----------- Gutter et Setter de Auteur -----------
