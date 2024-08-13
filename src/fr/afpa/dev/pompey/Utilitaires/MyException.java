@@ -13,6 +13,7 @@ public class MyException extends Exception {
 //    public Exception(String message, Throwable cause){
 //        Input.affichage(message);
 //    }
+    
 
 //    public Exception(Throwable cause){
 //        cause.toString();
