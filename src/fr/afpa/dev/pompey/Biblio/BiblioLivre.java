@@ -22,7 +22,7 @@ public class BiblioLivre {
 
         try{
             // ------ Saisie un nouvel abonné ------
-            Input.affichage("Saisir votre identifiant : ");
+            Input.affichage("Identifiant");
             // Entrer un nom
             abos.setNomAbos(Input.verifNomPrenom("Entrer votre nom : ", "nom"));
             //Entrer un prénom
