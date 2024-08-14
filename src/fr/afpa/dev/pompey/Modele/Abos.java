@@ -1,6 +1,6 @@
 package fr.afpa.dev.pompey.Modele;
 
-import fr.afpa.dev.pompey.Utilitaires.Input;
+import fr.afpa.dev.pompey.exception.SaisieException;
 
 import java.time.LocalDate;
 
@@ -14,14 +14,25 @@ public class Abos {
 
     }
 
+    public Abos(String nomAbos, String prenomAbos, String emailAbos, LocalDate dateAbos) {
+        this.nomAbos = nomAbos;
+        this.prenomAbos = prenomAbos;
+        this.emailAbos = emailAbos;
+        this.dateAbos = dateAbos;
+    }
+
     public String getNomAbos() {
         return nomAbos;
     }
 
-    public void setNomAbos(String nom){
-        if ( nom == null || !nom.isEmpty() ) {
-            this.nomAbos = nom;
+    public void setNomAbos(String nom) throws SaisieException {
+        if ( nom == null ) {
+            throw new SaisieException("le nom ne doit pas être vide");
         }
+        if (nom.isBlank() ) {
+            throw new SaisieException("le nom ne doit pas être vide");
+        }
+        this.nomAbos = nom;
 
     }
 
@@ -29,10 +40,14 @@ public class Abos {
         return prenomAbos;
     }
 
-    public void setPrenomAbos(String prenom){
-        if ( prenom == null || !prenom.isEmpty() ) {
-            this.prenomAbos = prenom;
+    public void setPrenomAbos(String prenom) throws SaisieException {
+        if ( prenom == null ) {
+            throw new SaisieException("le prenom ne doit pas être vide");
         }
+        if (prenom.isEmpty() ) {
+            throw new SaisieException("le prenom ne doit pas être vide");
+        }
+        this.prenomAbos = prenom;
 
     }
 
@@ -40,19 +55,30 @@ public class Abos {
         return emailAbos;
     }
 
-    public void setEmailAbos(String email) {
-        if (email != null && !email.isEmpty()) {
-            this.emailAbos = email;
-        }else{
-            Input.affichage("Veuillez re-saisir votre email");
+    public void setEmailAbos(String email) throws SaisieException {
+        if ( email == null ) {
+            throw new SaisieException("l'email ne doit pas être vide");
         }
+        if (email.isBlank() ) {
+            throw new SaisieException("l'email ne doit pas être vide");
+        }
+        this.emailAbos = email;
     }
 
     public LocalDate getDateInscriptionAbos() {
         return dateAbos;
     }
 
-    public void setDateInscriptionAbos(LocalDate dateAbos) {
+    public void setDateInscriptionAbos(LocalDate dateAbos) throws SaisieException {
+        if( dateAbos == null ) {
+            throw new SaisieException("La date ne doit pas être vide");
+        }
+        if (dateAbos.isBefore(LocalDate.now())) {
+            throw new SaisieException("La date ne doit pas être antérieure qu'aujourd'hui");
+        }
+        if (dateAbos.isAfter(LocalDate.now())) {
+            throw new SaisieException("La date d'inscription ne doit pas être supérieur qu'aujourd'hui");
+        }
         this.dateAbos = dateAbos;
     }
 

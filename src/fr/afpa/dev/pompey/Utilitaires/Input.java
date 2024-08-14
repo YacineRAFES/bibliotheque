@@ -1,9 +1,11 @@
 package fr.afpa.dev.pompey.Utilitaires;
 
+import fr.afpa.dev.pompey.exception.SaisieException;
+
 import java.time.LocalDate;
 import java.util.Scanner;
 
-public class Input extends MyException {
+public class Input extends SaisieException {
     //Gestion de scan
     private static Scanner scan = new Scanner(System.in);
 

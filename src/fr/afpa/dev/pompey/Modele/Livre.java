@@ -1,5 +1,7 @@
 package fr.afpa.dev.pompey.Modele;
 
+import fr.afpa.dev.pompey.exception.SaisieException;
+
 public class Livre {
     private String titre;
     private String auteur;
@@ -15,10 +17,14 @@ public class Livre {
         return titre;
     }
 
-    public void setTitre(String titre){
-        if ( titre == null || !titre.isEmpty() ) {
-            this.titre = titre;
+    public void setTitre(String titre) throws SaisieException {
+        if ( titre == null ) {
+            throw new SaisieException("le titre du livre ne doit pas être vide");
         }
+        if ( titre.isEmpty() ) {
+            throw new SaisieException("le titre du livre ne doit pas être vide");
+        }
+        this.titre = titre;
 
     }
 
