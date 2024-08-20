@@ -29,7 +29,7 @@ public class Abos {
         if ( nom == null ) {
             throw new SaisieException("le nom ne doit pas être vide");
         }
-        if (nom.isBlank() ) {
+        if (nom.isEmpty() ) {
             throw new SaisieException("le nom ne doit pas être vide");
         }
         this.nomAbos = nom;

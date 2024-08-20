@@ -17,10 +17,12 @@ class LivreTest {
 
     @BeforeEach
     void setUp() {
+        livreUnderTest = new Livre("titre", "auteur", 1);
     }
 
     @AfterEach
     void tearDown() {
+        livreUnderTest = null;
     }
 
     @ParameterizedTest
@@ -29,7 +31,7 @@ class LivreTest {
         SaisieException exception = assertThrows(SaisieException.class, () -> {
             livreUnderTest.setTitre(livre);
         });
-        assertEquals(exception.getMessage(), "le prenom ne doit pas être vide");
+        assertEquals(exception.getMessage(), "le titre du livre ne doit pas être vide");
     }
 
     @ParameterizedTest
@@ -38,11 +40,25 @@ class LivreTest {
         SaisieException exception = assertThrows(SaisieException.class, () -> {
             livreUnderTest.setTitre(livre);
         });
-        assertEquals(exception.getMessage(), "le prenom ne doit pas être vide");
+        assertEquals(exception.getMessage(), "le titre du livre ne doit pas être vide");
     }
 
-    @Test
-    void setAuteur() {
+    @ParameterizedTest
+    @NullSource
+    void setAuteurNull(String auteur) {
+        SaisieException exception = assertThrows(SaisieException.class, () -> {
+            livreUnderTest.setAuteur(auteur);
+        });
+        assertEquals(exception.getMessage(), "le nom de l'auteur ne doit pas être vide");
+    }
+
+    @ParameterizedTest
+    @EmptySource
+    void setAuteurEmpty(String auteur) {
+        SaisieException exception = assertThrows(SaisieException.class, () -> {
+            livreUnderTest.setAuteur(auteur);
+        });
+        assertEquals(exception.getMessage(), "le nom de l'auteur ne doit pas être vide");
     }
 
     @Test

@@ -2,6 +2,7 @@ package fr.afpa.dev.pompey.Utilitaires;
 
 import fr.afpa.dev.pompey.exception.SaisieException;
 
+import javax.swing.*;
 import java.time.LocalDate;
 import java.util.Scanner;
 
@@ -22,24 +23,18 @@ public class Input extends SaisieException {
             + "[^-][\\p{L}0-9\\+-]+(\\.[\\p{L}0-9\\+-]+)*(\\.[\\p{L}]{2,})$";
 
     //Affichage d'un message et lecture saisie de type de caractère
-    public static String verifNomPrenom(String message, String type){
-        String saisie;
+    public static String verifNomPrenom(String saisie, String type){
         do{
-            System.out.print(message);
-            saisie = scan.nextLine();
             if(!saisie.matches(REGEXNOMPRENOM)){
-                affichage("Veuillez re-saisir le "+ type);
+                AffMsgWindows("Veuillez re-saisir votre " + type);
             }
         }while(!saisie.matches(REGEXNOMPRENOM));
 
         return saisie;
     }
 
-    public static String getString(String message){
-        String saisie;
+    public static String getString(String saisie){
         do{
-            System.out.print(message);
-            saisie = scan.nextLine();
             if(!saisie.matches(REGEXSTRING)){
                 affichage("Veuillez re-saisir");
             }
@@ -49,31 +44,28 @@ public class Input extends SaisieException {
     }
 
     //Affichage d'un message et lecture saisie d'email
-    public static String getEmail(String message){
-        String saisie;
-        do{
-            System.out.print(message);
-            saisie = scan.nextLine();
-            if(!saisie.matches(REGEXEMAIL)){
-                affichage("Veuillez re-saisir votre email par exemple : votrenom@domaine.com");
-            }
-        }while(!saisie.matches(REGEXEMAIL));
-
+    public static String getEmail(String saisie){
+        if(!saisie.matches(REGEXEMAIL)){
+            AffMsgWindows("Veuillez re-saisir votre email par exemple : votrenom@domaine.com");
+        }
         return saisie;
     }
 
     //Affichage d'un message et lecture saisie de type Int
-    public static String getInt(String message){
-        String saisie;
+    public static String getInt(String saisie){
         do{
-            System.out.print(message);
-            saisie = scan.nextLine();
             if(!saisie.matches(REGEXINT)){
                 affichage("Veuillez re-saisir en entier");
             }
         }while(!saisie.matches(REGEXINT));
 
         return saisie;
+    }
+
+    //Affichage une fenetre avec un message
+    public static void AffMsgWindows(String message){
+        JFrame frame = new JFrame();
+        JOptionPane.showMessageDialog(frame, message);
     }
 
     //Affichage d'un message et lecture saisie de type date

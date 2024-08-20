@@ -12,6 +12,12 @@ public class Livre {
 
     }
 
+    public Livre(String titre, String auteur, int quantite) {
+        this.titre = titre;
+        this.auteur = auteur;
+        this.quantite = quantite;
+    }
+
     //----------- Gutter et Setter de Titre -----------
     public String getTitre() {
         return titre;
@@ -33,7 +39,13 @@ public class Livre {
         return auteur;
     }
 
-    public void setAuteur(String auteur) {
+    public void setAuteur(String auteur) throws SaisieException {
+        if ( auteur == null ) {
+            throw new SaisieException("le nom de l'auteur ne doit pas être vide");
+        }
+        if ( auteur.isEmpty() ) {
+            throw new SaisieException("le nom de l'auteur ne doit pas être vide");
+        }
         this.auteur = auteur;
     }
 

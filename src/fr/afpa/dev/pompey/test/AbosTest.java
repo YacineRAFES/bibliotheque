@@ -56,7 +56,7 @@ class AbosTest {
     @NullSource
     void setPrenomAbosNull(String prenom) {
         SaisieException exception = assertThrows(SaisieException.class, () -> {
-            abosUnderTest.setNomAbos(prenom);
+            abosUnderTest.setPrenomAbos(prenom);
         });
         assertEquals(exception.getMessage(), "le prenom ne doit pas être vide");
     }
@@ -66,7 +66,7 @@ class AbosTest {
     @EmptySource
     void setPrenomAbosEmpty(String prenom) {
         SaisieException exception = assertThrows(SaisieException.class, () -> {
-            abosUnderTest.setNomAbos(prenom);
+            abosUnderTest.setPrenomAbos(prenom);
         });
         assertEquals(exception.getMessage(), "le prenom ne doit pas être vide");
     }
