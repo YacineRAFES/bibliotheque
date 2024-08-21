@@ -23,20 +23,20 @@ public class Input extends SaisieException {
             + "[^-][\\p{L}0-9\\+-]+(\\.[\\p{L}0-9\\+-]+)*(\\.[\\p{L}]{2,})$";
 
     //Affichage d'un message et lecture saisie de type de caractère
-    public static String verifNomPrenom(String saisie, String type){
-        do{
-            if(!saisie.matches(REGEXNOMPRENOM)){
-                AffMsgWindows("Veuillez re-saisir votre " + type);
-            }
-        }while(!saisie.matches(REGEXNOMPRENOM));
+    public static String verifNomPrenom(String saisie, String type) throws SaisieException {
+        if(!saisie.matches(REGEXNOMPRENOM)){
+            AffMsgWindows("Veuillez re-saisir votre " + type);
+            throw new SaisieException();
+        }
 
         return saisie;
     }
 
-    public static String getString(String saisie){
+    public static String getString(String saisie) throws SaisieException {
         do{
             if(!saisie.matches(REGEXSTRING)){
-                affichage("Veuillez re-saisir");
+                AffMsgWindows("Veuillez re-saisir");
+                throw new SaisieException();
             }
         }while(!saisie.matches(REGEXSTRING));
 
@@ -44,18 +44,20 @@ public class Input extends SaisieException {
     }
 
     //Affichage d'un message et lecture saisie d'email
-    public static String getEmail(String saisie){
+    public static String getEmail(String saisie) throws SaisieException {
         if(!saisie.matches(REGEXEMAIL)){
             AffMsgWindows("Veuillez re-saisir votre email par exemple : votrenom@domaine.com");
+            throw new SaisieException();
         }
         return saisie;
     }
 
     //Affichage d'un message et lecture saisie de type Int
-    public static String getInt(String saisie){
+    public static String getInt(String saisie) throws SaisieException {
         do{
             if(!saisie.matches(REGEXINT)){
-                affichage("Veuillez re-saisir en entier");
+                AffMsgWindows("Veuillez re-saisir en entier");
+                throw new SaisieException();
             }
         }while(!saisie.matches(REGEXINT));
 

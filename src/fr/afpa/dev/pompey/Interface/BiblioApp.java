@@ -10,6 +10,8 @@ import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -59,8 +61,6 @@ public class BiblioApp extends JFrame {
     private JScrollPane scroll;
 
     public BiblioApp() {
-        Abos abos = new Abos();
-        JFrame frame = new JFrame();
         setTitle("Application");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setContentPane(contentPane);
@@ -80,8 +80,8 @@ public class BiblioApp extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 try {
                     enregistrerAbos();
-                } catch (SaisieException ex) {
-                    Input.AffMsgWindows("Problème de saisie, veuillez contacter le développement de logiciel");
+                } catch (Exception ex) {
+                    new RuntimeException(ex);
                 }
             }
         });
@@ -136,22 +136,38 @@ public class BiblioApp extends JFrame {
     //Abonnees
 
     private void enregistrerAbos() throws SaisieException {
-        Abos abos = new Abos();
         String Nom = nomFieldAbos.getText();
         String Prenom = prenomFieldAbos.getText();
         String Email = emailFieldAbos.getText();
 
         // Validation simple des champs (vous pouvez ajouter plus de validation si nécessaire)
         if (Nom.isEmpty() || Prenom.isEmpty() || Email.isEmpty()) {
-            Input.AffMsgWindows("Les champs manquants n'ont pas été saisis");
+            Input.AffMsgWindows("Les champs manquants doit être saisis");
+            throw new SaisieException();
         }
-        abos.setNomAbos(Nom);
-        abos.setPrenomAbos(Prenom);
-        abos.setEmailAbos(Email);
-        abos.setDateInscriptionAbos(Input.CreateDateNow());
+
+        for(Abos UniqueEmail : getAbos()){
+            if(UniqueEmail.getEmailAbos().equalsIgnoreCase(Email)){
+                emailFieldAbos.setText("");
+                Input.AffMsgWindows("L'email existe déjà, il doit être unique");
+                throw new SaisieException();
+            }
+        }
+
+        Abos abos = new Abos(
+                Input.verifNomPrenom(Nom, "nom"),
+                Input.verifNomPrenom(Prenom, "prenom"),
+                Input.getEmail(Email),
+                Input.CreateDateNow());
+
+
+        getAbos().add(abos);
         System.out.println(abos);
-        repaint();
-        
+
+        listAbos.revalidate();
+        listAbos.repaint();
+
+        Input.AffMsgWindows("Abonné enregistré avec succès.");
 
 
     }
@@ -196,51 +212,6 @@ public class BiblioApp extends JFrame {
     }
 
     // Affichage d'une liste
-
-    public static class AbosTableModel extends AbstractTableModel {
-
-        private final String[] ENTETE = new String[] {
-                "Nom", "Prénom", "Email", "Date d'inscription"
-        };
-        private final List<Abos> abos;
-
-        public AbosTableModel(List<Abos> abos) {
-            this.abos = abos;
-        }
-
-        @Override
-        public String getColumnName(int column) {
-            return ENTETE[column];
-        }
-
-        @Override
-        public int getRowCount() {
-            return abos.size();
-        }
-
-        @Override
-        public int getColumnCount() {
-            return ENTETE.length;
-        }
-
-        @Override
-        public Object getValueAt(int rowIndex, int columnIndex) {
-            Abos abo = abos.get(rowIndex);
-            switch (columnIndex) {
-                case 0:
-                    return abo.getNomAbos();
-                case 1:
-                    return abo.getPrenomAbos();
-                case 2:
-                    return abo.getEmailAbos();
-                case 3:
-                    return abo.getDateInscriptionAbos();
-                default:
-                    return null;
-            }
-        }
-    }
-
 
 
 }
