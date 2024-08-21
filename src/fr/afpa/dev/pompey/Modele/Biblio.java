@@ -25,7 +25,6 @@ public class Biblio {
         if(livre != null) {
             throw new SaisieException("Erreur Système : problème d'enregistrement");
         }
-
         getLivres().add(livre);
     }
 

@@ -1,21 +1,18 @@
 package fr.afpa.dev.pompey.Interface;
 
 import fr.afpa.dev.pompey.Modele.Abos;
-import fr.afpa.dev.pompey.Modele.Biblio;
+import fr.afpa.dev.pompey.Modele.Livre;
 import fr.afpa.dev.pompey.Modele.datamodele.AbosTableModel;
+import fr.afpa.dev.pompey.Modele.datamodele.LivreTableModel;
 import fr.afpa.dev.pompey.exception.SaisieException;
 import fr.afpa.dev.pompey.Utilitaires.*;
 
 import javax.swing.*;
-import javax.swing.table.AbstractTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.time.LocalDate;
-import java.util.List;
 
 import static fr.afpa.dev.pompey.Modele.Biblio.getAbos;
+import static fr.afpa.dev.pompey.Modele.Biblio.getLivres;
 
 public class BiblioApp extends JFrame {
     private JTabbedPane onglets;
@@ -59,6 +56,10 @@ public class BiblioApp extends JFrame {
     private JPanel boutonPanelAbos;
     private JTable listAbos;
     private JScrollPane scroll;
+    private JTextField quantiteFieldLivre;
+    private JLabel quantiteLabelLivre;
+    private JTable listLivres;
+    private JScrollPane scrollLivre;
 
     public BiblioApp() {
         setTitle("Application");
@@ -68,8 +69,11 @@ public class BiblioApp extends JFrame {
 
         setLocationRelativeTo(null);
 
-        AbosTableModel model = new AbosTableModel(getAbos());
-        this.listAbos.setModel(model);
+        AbosTableModel model1 = new AbosTableModel(getAbos());
+        this.listAbos.setModel(model1);
+
+        LivreTableModel model2 = new LivreTableModel(getLivres());
+        this.listLivres.setModel(model2);
 
         // ----Les Actions Listeners----
 
@@ -100,7 +104,7 @@ public class BiblioApp extends JFrame {
                 try {
                     enregistrerLivre();
                 } catch (SaisieException ex) {
-                    Input.AffMsgWindows("Problème de saisie, veuillez contacter le développement de logiciel");
+                    new RuntimeException(ex);
                 }
             }
         });
@@ -140,12 +144,13 @@ public class BiblioApp extends JFrame {
         String Prenom = prenomFieldAbos.getText();
         String Email = emailFieldAbos.getText();
 
-        // Validation simple des champs (vous pouvez ajouter plus de validation si nécessaire)
+        // Verifie si les champs de saisies ne sont pas vides
         if (Nom.isEmpty() || Prenom.isEmpty() || Email.isEmpty()) {
             Input.AffMsgWindows("Les champs manquants doit être saisis");
             throw new SaisieException();
         }
 
+        // Verifie si l'email est unique
         for(Abos UniqueEmail : getAbos()){
             if(UniqueEmail.getEmailAbos().equalsIgnoreCase(Email)){
                 emailFieldAbos.setText("");
@@ -154,16 +159,18 @@ public class BiblioApp extends JFrame {
             }
         }
 
+        // Ajoute les saisies dans le constructeur avec les verification de regex
         Abos abos = new Abos(
                 Input.verifNomPrenom(Nom, "nom"),
                 Input.verifNomPrenom(Prenom, "prenom"),
                 Input.getEmail(Email),
                 Input.CreateDateNow());
 
-
+        // Ajoute une ligne dans la JTable listAbos
         getAbos().add(abos);
-        System.out.println(abos);
+        // System.out.println(abos);
 
+        // Refresh l'interface
         listAbos.revalidate();
         listAbos.repaint();
 
@@ -183,16 +190,29 @@ public class BiblioApp extends JFrame {
     private void enregistrerLivre() throws SaisieException {
         String titre = titreFieldLivre.getText();
         String auteur = auteurFieldLivre.getText();
+        String quantite = quantiteFieldLivre.getText();
 
         if (titre.isEmpty() || auteur.isEmpty()) {
             Input.AffMsgWindows("Les champs manquants n'ont pas été saisis");
+            throw new SaisieException();
         }
+        // Ajoute les saisies dans le constructeur avec les verification de regex
+        Livre livres = new Livre(
+                Input.getString(titre),
+                Input.getString(auteur),
+                Input.getInt(quantite));
 
+        getLivres().add(livres);
 
+        listLivres.revalidate();
+        listLivres.repaint();
+
+        Input.AffMsgWindows("Le Livre a été ajouté");
     }
     private void annulerSaisieLivre(){
         titreFieldLivre.setText("");
         auteurFieldLivre.setText("");
+        quantiteFieldLivre.setText("");
     }
 
     // Prets

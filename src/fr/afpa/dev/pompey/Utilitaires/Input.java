@@ -33,13 +33,10 @@ public class Input extends SaisieException {
     }
 
     public static String getString(String saisie) throws SaisieException {
-        do{
-            if(!saisie.matches(REGEXSTRING)){
-                AffMsgWindows("Veuillez re-saisir");
-                throw new SaisieException();
-            }
-        }while(!saisie.matches(REGEXSTRING));
-
+        if(!saisie.matches(REGEXSTRING)){
+            AffMsgWindows("Veuillez re-saisir en caractère, PAS EN ENTIIIIIIIIIIIIIIIER");
+            throw new SaisieException();
+        }
         return saisie;
     }
 
@@ -53,15 +50,12 @@ public class Input extends SaisieException {
     }
 
     //Affichage d'un message et lecture saisie de type Int
-    public static String getInt(String saisie) throws SaisieException {
-        do{
-            if(!saisie.matches(REGEXINT)){
-                AffMsgWindows("Veuillez re-saisir en entier");
-                throw new SaisieException();
-            }
-        }while(!saisie.matches(REGEXINT));
-
-        return saisie;
+    public static int getInt(String saisie) throws SaisieException {
+        if(!saisie.matches(REGEXINT)){
+            AffMsgWindows("Veuillez re-saisir en entier");
+            throw new SaisieException("La saisie n'est pas un entier");
+        }
+        return Integer.parseInt(saisie);
     }
 
     //Affichage une fenetre avec un message
