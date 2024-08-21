@@ -4,7 +4,7 @@ import fr.afpa.dev.pompey.exception.SaisieException;
 
 import java.time.LocalDate;
 
-public class Pret{
+public class Pret {
     private LocalDate dateDebut;
     private LocalDate dateFin;
 
@@ -12,6 +12,10 @@ public class Pret{
     public Pret(){
     }
 
+//    public Pret(String nomAbos, String prenomAbos, String titre, String auteur, LocalDate dateDebut, LocalDate dateFin) {
+//        this.dateDebut = dateDebut;
+//        this.dateFin = dateFin;
+//    }
     public Pret(LocalDate dateDebut, LocalDate dateFin){
         this.dateDebut = dateDebut;
         this.dateFin = dateFin;

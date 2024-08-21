@@ -29,12 +29,12 @@ public class Input extends SaisieException {
             throw new SaisieException();
         }
 
-        return saisie;
+        return saisie.toUpperCase();
     }
 
     public static String getString(String saisie) throws SaisieException {
         if(!saisie.matches(REGEXSTRING)){
-            AffMsgWindows("Veuillez re-saisir en caractère, PAS EN ENTIIIIIIIIIIIIIIIER");
+            AffMsgWindows("Veuillez re-saisir");
             throw new SaisieException();
         }
         return saisie;
@@ -46,7 +46,7 @@ public class Input extends SaisieException {
             AffMsgWindows("Veuillez re-saisir votre email par exemple : votrenom@domaine.com");
             throw new SaisieException();
         }
-        return saisie;
+        return saisie.toLowerCase();
     }
 
     //Affichage d'un message et lecture saisie de type Int

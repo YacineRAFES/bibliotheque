@@ -10,6 +10,7 @@ import fr.afpa.dev.pompey.Utilitaires.*;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ContainerAdapter;
 
 import static fr.afpa.dev.pompey.Modele.Biblio.getAbos;
 import static fr.afpa.dev.pompey.Modele.Biblio.getLivres;
@@ -46,7 +47,6 @@ public class BiblioApp extends JFrame {
     private JTextField livreFieldPret;
     private JButton validerSaisiePret;
     private JButton annulerSaisiePret;
-    private JLabel livreLabelPret;
     private JLabel UtilisateurLabelPret;
     private JLabel titreLabelPret;
     private JPanel boutonPanelPret;
@@ -60,6 +60,10 @@ public class BiblioApp extends JFrame {
     private JLabel quantiteLabelLivre;
     private JTable listLivres;
     private JScrollPane scrollLivre;
+    private JTable tablePret;
+    private JComboBox utilisateurComboBoxPret;
+    private JComboBox livreComboBoxPret;
+    private JLabel livreLabelPret;
 
     public BiblioApp() {
         setTitle("Application");
@@ -74,6 +78,13 @@ public class BiblioApp extends JFrame {
 
         LivreTableModel model2 = new LivreTableModel(getLivres());
         this.listLivres.setModel(model2);
+
+        Util // A FAIRE
+        String[] strings = new String[]{getAbos().toString()} ;
+        utilisateurComboBoxPret = new JComboBox(strings);
+
+
+
 
         // ----Les Actions Listeners----
 
@@ -133,6 +144,8 @@ public class BiblioApp extends JFrame {
                 annulerSaisiePret();
             }
         });
+        utilisateurComboBoxPret.addContainerListener(new ContainerAdapter() {
+        });
     }
 
     //Les Fonctions
@@ -176,7 +189,9 @@ public class BiblioApp extends JFrame {
 
         Input.AffMsgWindows("Abonné enregistré avec succès.");
 
-
+        nomFieldAbos.setText("");
+        prenomFieldAbos.setText("");
+        emailFieldAbos.setText("");
     }
 
     private void annulerSaisieAbos(){
@@ -196,10 +211,11 @@ public class BiblioApp extends JFrame {
             Input.AffMsgWindows("Les champs manquants n'ont pas été saisis");
             throw new SaisieException();
         }
+
         // Ajoute les saisies dans le constructeur avec les verification de regex
         Livre livres = new Livre(
                 Input.getString(titre),
-                Input.getString(auteur),
+                Input.verifNomPrenom(auteur, "prenom et nom de l'auteur"),
                 Input.getInt(quantite));
 
         getLivres().add(livres);
@@ -208,7 +224,12 @@ public class BiblioApp extends JFrame {
         listLivres.repaint();
 
         Input.AffMsgWindows("Le Livre a été ajouté");
+
+        titreFieldLivre.setText("");
+        auteurFieldLivre.setText("");
+        quantiteFieldLivre.setText("");
     }
+
     private void annulerSaisieLivre(){
         titreFieldLivre.setText("");
         auteurFieldLivre.setText("");
