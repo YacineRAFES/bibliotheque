@@ -7,9 +7,13 @@ import fr.afpa.dev.pompey.exception.SaisieException;
 import fr.afpa.dev.pompey.Utilitaires.*;
 
 import javax.swing.*;
+import javax.swing.table.AbstractTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
+import java.util.List;
+
+import static fr.afpa.dev.pompey.Modele.Biblio.getAbos;
 
 public class BiblioApp extends JFrame {
     private JTabbedPane onglets;
@@ -64,7 +68,7 @@ public class BiblioApp extends JFrame {
 
         setLocationRelativeTo(null);
 
-        AbosTableModel model = new AbosTableModel(Biblio.getAbos());
+        AbosTableModel model = new AbosTableModel(getAbos());
         this.listAbos.setModel(model);
 
         // ----Les Actions Listeners----
@@ -125,8 +129,6 @@ public class BiblioApp extends JFrame {
                 annulerSaisiePret();
             }
         });
-
-
     }
 
     //Les Fonctions
@@ -138,13 +140,17 @@ public class BiblioApp extends JFrame {
         String Nom = nomFieldAbos.getText();
         String Prenom = prenomFieldAbos.getText();
         String Email = emailFieldAbos.getText();
-        LocalDate Date = LocalDate.now();
 
         // Validation simple des champs (vous pouvez ajouter plus de validation si nécessaire)
         if (Nom.isEmpty() || Prenom.isEmpty() || Email.isEmpty()) {
             Input.AffMsgWindows("Les champs manquants n'ont pas été saisis");
         }
-//        Abos abos = new Abos(Nom, Prenom, Email, LocalDate.now());
+        abos.setNomAbos(Nom);
+        abos.setPrenomAbos(Prenom);
+        abos.setEmailAbos(Email);
+        abos.setDateInscriptionAbos(Input.CreateDateNow());
+        System.out.println(abos);
+        repaint();
         
 
 
@@ -191,7 +197,49 @@ public class BiblioApp extends JFrame {
 
     // Affichage d'une liste
 
+    public static class AbosTableModel extends AbstractTableModel {
 
+        private final String[] ENTETE = new String[] {
+                "Nom", "Prénom", "Email", "Date d'inscription"
+        };
+        private final List<Abos> abos;
+
+        public AbosTableModel(List<Abos> abos) {
+            this.abos = abos;
+        }
+
+        @Override
+        public String getColumnName(int column) {
+            return ENTETE[column];
+        }
+
+        @Override
+        public int getRowCount() {
+            return abos.size();
+        }
+
+        @Override
+        public int getColumnCount() {
+            return ENTETE.length;
+        }
+
+        @Override
+        public Object getValueAt(int rowIndex, int columnIndex) {
+            Abos abo = abos.get(rowIndex);
+            switch (columnIndex) {
+                case 0:
+                    return abo.getNomAbos();
+                case 1:
+                    return abo.getPrenomAbos();
+                case 2:
+                    return abo.getEmailAbos();
+                case 3:
+                    return abo.getDateInscriptionAbos();
+                default:
+                    return null;
+            }
+        }
+    }
 
 
 
