@@ -185,6 +185,7 @@ public class BiblioApp extends JFrame {
                         comboBoxModel2.addElement(livre);
                     }
 
+                    
                 }else{
                     comboBoxModel2.removeAllElements();
                     comboBoxModel1.removeAllElements();
