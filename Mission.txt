@@ -1,0 +1,6 @@
+MISSION:
+
+- Ajoute quelque décoration sur l'application
+- Ajoute une barre de recherche dans chacun onglets
+- Quand on ajoute un pret d'un livre, la quantité change
+OK : Bugs : quand on va à onglet PRet, il actualise les deux combobox mais quand on retourne au Livre et on revient à l'onglet Pret, il crée les doublons

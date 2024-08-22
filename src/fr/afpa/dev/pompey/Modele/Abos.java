@@ -84,10 +84,11 @@ public class Abos {
 
     @Override
     public String toString() {
-        return
-                "Le nom de l'abonné : " + getNomAbos() + '\n' +
-                "le prenom de l'abonne : " + getPrenomAbos() + '\n' +
-                "le email : " + getEmailAbos() + '\n' +
-                "La date de l'inscription : " + getDateInscriptionAbos() + '\n';
+        return this.getNomAbos() + " " + this.getPrenomAbos();
+
+               // "Le nom de l'abonné : " + getNomAbos() + '\n' +
+              //  "le prenom de l'abonne : " + getPrenomAbos() + '\n' +
+              //  "le email : " + getEmailAbos() + '\n' +
+             //   "La date de l'inscription : " + getDateInscriptionAbos() + '\n';
     }
 }

@@ -2,18 +2,21 @@ package fr.afpa.dev.pompey.Interface;
 
 import fr.afpa.dev.pompey.Modele.Abos;
 import fr.afpa.dev.pompey.Modele.Livre;
+import fr.afpa.dev.pompey.Modele.Pret;
 import fr.afpa.dev.pompey.Modele.datamodele.AbosTableModel;
 import fr.afpa.dev.pompey.Modele.datamodele.LivreTableModel;
+import fr.afpa.dev.pompey.Modele.datamodele.PretTableModel;
+import fr.afpa.dev.pompey.Modele.listmodele.Liste;
 import fr.afpa.dev.pompey.exception.SaisieException;
 import fr.afpa.dev.pompey.Utilitaires.*;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ContainerAdapter;
 
 import static fr.afpa.dev.pompey.Modele.Biblio.getAbos;
-import static fr.afpa.dev.pompey.Modele.Biblio.getLivres;
 
 public class BiblioApp extends JFrame {
     private JTabbedPane onglets;
@@ -64,6 +67,8 @@ public class BiblioApp extends JFrame {
     private JComboBox utilisateurComboBoxPret;
     private JComboBox livreComboBoxPret;
     private JLabel livreLabelPret;
+    private JPanel barSearchPanel;
+    private JTextField barSearchField;
 
     public BiblioApp() {
         setTitle("Application");
@@ -73,23 +78,43 @@ public class BiblioApp extends JFrame {
 
         setLocationRelativeTo(null);
 
-        AbosTableModel model1 = new AbosTableModel(getAbos());
+        AbosTableModel model1 = new AbosTableModel(Liste.getAbos());
         this.listAbos.setModel(model1);
 
-        LivreTableModel model2 = new LivreTableModel(getLivres());
+        LivreTableModel model2 = new LivreTableModel(Liste.getLivres());
         this.listLivres.setModel(model2);
 
-        Util // A FAIRE
-        String[] strings = new String[]{getAbos().toString()} ;
-        utilisateurComboBoxPret = new JComboBox(strings);
+        PretTableModel model3 = new PretTableModel(Liste.getPret());
+        this.tablePret.setModel(model3);
+
+        DefaultComboBoxModel<Abos> comboBoxModel1 = (DefaultComboBoxModel<Abos>) utilisateurComboBoxPret.getModel();
+        DefaultComboBoxModel<Livre> comboBoxModel2 = (DefaultComboBoxModel<Livre>) livreComboBoxPret.getModel();
+
+/*        DefaultComboBoxModel<Abos> comboBoxModel1 = new DefaultComboBoxModel();
+
+        for(Abos abos : Liste.getAbos()){
+            comboBoxModel1.addElement(abos);
+        }
+
+        livreComboBoxPret.setModel(comboBoxModel1);*/
+
+// ESSAI 1
+
+        /*DefaultComboBoxModel<Livre> comboBoxModel2 = new DefaultComboBoxModel<>();
+
+        for(Livre livres : Liste.getLivres()){
+            comboBoxModel2.addElement(livres);
+        }*/
+
+// ESSAI 2
 
 
+//
 
 
         // ----Les Actions Listeners----
 
         // Abonnés
-
         validerButtonAbos.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -134,17 +159,37 @@ public class BiblioApp extends JFrame {
                 try {
                     enregistrerPret();
                 } catch (SaisieException ex) {
-                    throw new RuntimeException(ex);
+                    new RuntimeException(ex);
                 }
             }
         });
         annulerSaisiePret.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                annulerSaisiePret();
+                try{
+                    annulerSaisiePret();
+                }catch(Exception ex){
+                    new RuntimeException(ex);
+                }
             }
         });
-        utilisateurComboBoxPret.addContainerListener(new ContainerAdapter() {
+
+        onglets.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                if (onglets.getSelectedIndex() == 3) {
+                    for (Abos abos : Liste.getAbos()) {
+                        comboBoxModel1.addElement(abos);
+                    }
+                    for (Livre livre : Liste.getLivres()) {
+                        comboBoxModel2.addElement(livre);
+                    }
+
+                }else{
+                    comboBoxModel2.removeAllElements();
+                    comboBoxModel1.removeAllElements();
+                }
+            }
         });
     }
 
@@ -180,8 +225,7 @@ public class BiblioApp extends JFrame {
                 Input.CreateDateNow());
 
         // Ajoute une ligne dans la JTable listAbos
-        getAbos().add(abos);
-        // System.out.println(abos);
+        Liste.addAbos(abos);
 
         // Refresh l'interface
         listAbos.revalidate();
@@ -218,7 +262,7 @@ public class BiblioApp extends JFrame {
                 Input.verifNomPrenom(auteur, "prenom et nom de l'auteur"),
                 Input.getInt(quantite));
 
-        getLivres().add(livres);
+        Liste.addLivre(livres);
 
         listLivres.revalidate();
         listLivres.repaint();
@@ -239,17 +283,36 @@ public class BiblioApp extends JFrame {
     // Prets
 
     private void enregistrerPret() throws SaisieException {
-        String titre = livreFieldPret.getText();
-        String utilisateur = UtilisateurFieldPret.getText();
+        Object titre = livreComboBoxPret.getSelectedItem();
+        Object utilisateur = utilisateurComboBoxPret.getSelectedItem();
 
-        if (titre.isEmpty() || utilisateur.isEmpty()) {
-            Input.AffMsgWindows("Les champs manquants n'ont pas été saisis");
+        if (titre.equals("0") || utilisateur.equals("0")) {
+            Input.AffMsgWindows("Vous n'aviez pas choisi les informations de l'utilisateur et le livre");
+            throw new SaisieException();
         }
+
+        Pret prets = new Pret(
+                (Abos) utilisateur,
+                (Livre) titre,
+                Input.CreateDateNow(),
+                Input.EndDate()
+        );
+
+        Liste.addPret(prets);
+
+        tablePret.revalidate();
+        tablePret.repaint();
+
+        Input.AffMsgWindows("Le Pret a été ajouté");
+
+        utilisateurComboBoxPret.setSelectedIndex(0);
+        livreComboBoxPret.setSelectedIndex(0);
     }
 
     private void annulerSaisiePret(){
-        livreFieldPret.setText("");
-        UtilisateurFieldPret.setText("");
+        utilisateurComboBoxPret.setSelectedIndex(0);
+        livreComboBoxPret.setSelectedIndex(0);
+
     }
 
     // Affichage d'une liste

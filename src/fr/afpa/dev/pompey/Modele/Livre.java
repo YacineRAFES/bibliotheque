@@ -60,9 +60,6 @@ public class Livre {
 
     @Override
     public String toString() {
-        return
-                "Le titre du Livre : " + getTitre() + '\n' +
-                "L'auteur du Livre : " + getAuteur() + '\n' +
-                "La quantite : " + getQuantite() + '\n';
+        return this.getTitre() + " " + this.getAuteur();
     }
 }

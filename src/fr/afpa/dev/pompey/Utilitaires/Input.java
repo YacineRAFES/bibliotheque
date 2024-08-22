@@ -14,7 +14,7 @@ public class Input extends SaisieException {
     }
 
     //Liste de REGEX
-    private static final String REGEXNOMPRENOM = "^([a-zA-Z]+[,.]?[ ]?|[a-zA-Z]+[\\'-]?)+$";
+    private static final String REGEXNOMPRENOM = "^([a-zA-Za-zàáâäçèéêëìíîïñòóôöùúûü]+[,.]?[ ]?|[a-zA-Za-zàáâäçèéêëìíîïñòóôöùúûü]+[\\'-]?)+$";
     private static final String REGEXDATE = "^-\\d{2}-\\d{2}-\\d{4}$";
     private static final String REGEXSTRING = "^[a-zA-Z0-9_.-]*$";
 
@@ -55,7 +55,12 @@ public class Input extends SaisieException {
             AffMsgWindows("Veuillez re-saisir en entier");
             throw new SaisieException("La saisie n'est pas un entier");
         }
-        return Integer.parseInt(saisie);
+        try{
+            return  Integer.parseInt(saisie);
+        }catch(NumberFormatException e){
+            AffMsgWindows("Veuillez re-saisir un entier moins de 2000000000");
+            throw new SaisieException();
+        }
     }
 
     //Affichage une fenetre avec un message

@@ -5,6 +5,8 @@ import fr.afpa.dev.pompey.exception.SaisieException;
 import java.time.LocalDate;
 
 public class Pret {
+    private Abos abos;
+    private Livre livre;
     private LocalDate dateDebut;
     private LocalDate dateFin;
 
@@ -12,10 +14,29 @@ public class Pret {
     public Pret(){
     }
 
-//    public Pret(String nomAbos, String prenomAbos, String titre, String auteur, LocalDate dateDebut, LocalDate dateFin) {
-//        this.dateDebut = dateDebut;
-//        this.dateFin = dateFin;
-//    }
+    public Abos getAbos() {
+        return abos;
+    }
+
+    public void setAbos(Abos abos) {
+        this.abos = abos;
+    }
+
+    public Livre getLivre() {
+        return livre;
+    }
+
+    public void setLivre(Livre livre) {
+        this.livre = livre;
+    }
+
+    public Pret(Abos abos, Livre livre, LocalDate dateDebut, LocalDate dateFin) {
+        this.abos=abos;
+        this.livre = livre;
+        this.dateDebut = dateDebut;
+        this.dateFin = dateFin;
+
+    }
     public Pret(LocalDate dateDebut, LocalDate dateFin){
         this.dateDebut = dateDebut;
         this.dateFin = dateFin;

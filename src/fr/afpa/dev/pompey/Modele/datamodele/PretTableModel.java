@@ -1,12 +1,9 @@
 package fr.afpa.dev.pompey.Modele.datamodele;
 
 import fr.afpa.dev.pompey.Modele.Pret;
-import fr.afpa.dev.pompey.Modele.Abos;
-import fr.afpa.dev.pompey.Modele.Livre;
 
 import javax.swing.table.AbstractTableModel;
 import java.time.LocalDate;
-import java.time.chrono.ChronoLocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
@@ -15,13 +12,9 @@ public class PretTableModel extends AbstractTableModel {
             "Nom/Prénom", "Email", "Livres", "Début Prêt", "Fin Prêt", "Se termine dans"
     };
     private final List<Pret> pret;
-    private final List<Abos> abos;
-    private final List<Livre> livres;
 
-    public PretTableModel(List<Pret> pret, List<Abos> abos, List<Livre> livres) {
+    public PretTableModel(List<Pret> pret) {
         this.pret = pret;
-        this.abos = abos;
-        this.livres = livres;
     }
 
     @Override
@@ -42,22 +35,18 @@ public class PretTableModel extends AbstractTableModel {
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         Pret prets = pret.get(rowIndex);
-        Livre livres = new Livre();
-        Abos abos = new Abos();
         switch (columnIndex) {
-            case 0:
-                return abos.getNomAbos() + " " + abos.getPrenomAbos();
-            case 1:
-                return abos.getEmailAbos();
-            case 2:
-                return abos.getEmailAbos();
-            case 3:
-                return livres.getTitre() + " " + livres.getAuteur();
-            case 4:
+            case 0:// Nom/Prénom
+                return prets.getAbos().getNomAbos() + " " + prets.getAbos().getPrenomAbos();
+            case 1://Email
+                return prets.getAbos().getEmailAbos();
+            case 2://Livres
+                return prets.getLivre().getAuteur() + " " + prets.getLivre().getTitre();
+            case 3://Début Pret
                 return prets.getDateDebut();
-            case 5:
+            case 4://Fin Pret
                 return prets.getDateFin();
-            case 6:
+            case 5://Se termine
                 return ChronoUnit.DAYS.between(LocalDate.now(), prets.getDateFin())+ " jours";
             default:
                 return null;
