@@ -15,6 +15,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 import static fr.afpa.dev.pompey.Modele.Biblio.getAbos;
 
@@ -89,29 +91,6 @@ public class BiblioApp extends JFrame {
 
         DefaultComboBoxModel<Abos> comboBoxModel1 = (DefaultComboBoxModel<Abos>) utilisateurComboBoxPret.getModel();
         DefaultComboBoxModel<Livre> comboBoxModel2 = (DefaultComboBoxModel<Livre>) livreComboBoxPret.getModel();
-
-/*        DefaultComboBoxModel<Abos> comboBoxModel1 = new DefaultComboBoxModel();
-
-        for(Abos abos : Liste.getAbos()){
-            comboBoxModel1.addElement(abos);
-        }
-
-        livreComboBoxPret.setModel(comboBoxModel1);*/
-
-// ESSAI 1
-
-        /*DefaultComboBoxModel<Livre> comboBoxModel2 = new DefaultComboBoxModel<>();
-
-        for(Livre livres : Liste.getLivres()){
-            comboBoxModel2.addElement(livres);
-        }*/
-
-// ESSAI 2
-
-
-//
-
-
         // ----Les Actions Listeners----
 
         // Abonnés
@@ -185,10 +164,22 @@ public class BiblioApp extends JFrame {
                         comboBoxModel2.addElement(livre);
                     }
 
-                    
+
                 }else{
                     comboBoxModel2.removeAllElements();
                     comboBoxModel1.removeAllElements();
+                }
+            }
+        });
+        barSearchField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                String saisie = barSearchField.getText();
+                System.out.println(saisie);
+                for(Pret pret : Liste.getPret()){
+                    pret.equals(saisie);
+
+                    // FAIRE LA BARRE DE RECHERCHE https://stackoverflow.com/questions/22066387/how-to-search-an-element-in-a-jtable-java
                 }
             }
         });
