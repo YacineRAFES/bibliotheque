@@ -15,8 +15,6 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 import static fr.afpa.dev.pompey.Modele.Biblio.getAbos;
 
@@ -69,8 +67,11 @@ public class BiblioApp extends JFrame {
     private JComboBox utilisateurComboBoxPret;
     private JComboBox livreComboBoxPret;
     private JLabel livreLabelPret;
-    private JPanel barSearchPanel;
-    private JTextField barSearchField;
+    private JPanel barSearchPanelPret;
+    private JTextField barSearchFieldPret;
+    private JPanel barSearchPanelLivre;
+    private JTextField barSearchFieldLivre;
+    private JTextField barSearchFieldAbos;
 
     public BiblioApp() {
         setTitle("Application");
@@ -91,7 +92,6 @@ public class BiblioApp extends JFrame {
 
         DefaultComboBoxModel<Abos> comboBoxModel1 = (DefaultComboBoxModel<Abos>) utilisateurComboBoxPret.getModel();
         DefaultComboBoxModel<Livre> comboBoxModel2 = (DefaultComboBoxModel<Livre>) livreComboBoxPret.getModel();
-        // ----Les Actions Listeners----
 
         // Abonnés
         validerButtonAbos.addActionListener(new ActionListener() {
@@ -171,18 +171,10 @@ public class BiblioApp extends JFrame {
                 }
             }
         });
-        barSearchField.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyReleased(KeyEvent e) {
-                String saisie = barSearchField.getText();
-                System.out.println(saisie);
-                for(Pret pret : Liste.getPret()){
-                    pret.equals(saisie);
 
-                    // FAIRE LA BARRE DE RECHERCHE https://stackoverflow.com/questions/22066387/how-to-search-an-element-in-a-jtable-java
-                }
-            }
-        });
+        new filterTable(barSearchFieldPret, model3, tablePret);
+        new filterTable(barSearchFieldLivre, model2, listLivres);
+        new filterTable(barSearchFieldAbos, model1, listAbos);
     }
 
     //Les Fonctions
