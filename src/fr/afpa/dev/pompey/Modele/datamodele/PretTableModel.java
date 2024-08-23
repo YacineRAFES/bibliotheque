@@ -9,7 +9,7 @@ import java.util.List;
 
 public class PretTableModel extends AbstractTableModel {
     private final String[] ENTETE = new String[] {
-            "Nom/Prénom", "Email", "Livres", "Début Prêt", "Fin Prêt", "Se termine dans"
+            "Nom/Prénom", "Email", "Livres", "Début Prêt", "Fin Prêt", "Se termine dans", "Modif"
     };
     private final List<Pret> pret;
 
@@ -48,6 +48,8 @@ public class PretTableModel extends AbstractTableModel {
                 return prets.getDateFin();
             case 5://Se termine
                 return ChronoUnit.DAYS.between(LocalDate.now(), prets.getDateFin())+ " jours";
+            case 6:
+                return
             default:
                 return null;
         }

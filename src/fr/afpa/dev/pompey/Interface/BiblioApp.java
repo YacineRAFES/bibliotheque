@@ -17,6 +17,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import static fr.afpa.dev.pompey.Modele.Biblio.getAbos;
+import static fr.afpa.dev.pompey.Modele.Biblio.getLivres;
 
 public class BiblioApp extends JFrame {
     private JTabbedPane onglets;
@@ -270,9 +271,21 @@ public class BiblioApp extends JFrame {
         Object titre = livreComboBoxPret.getSelectedItem();
         Object utilisateur = utilisateurComboBoxPret.getSelectedItem();
 
-        if (titre.equals("0") || utilisateur.equals("0")) {
+        if (titre == null || utilisateur == null ) {
             Input.AffMsgWindows("Vous n'aviez pas choisi les informations de l'utilisateur et le livre");
             throw new SaisieException();
+        }
+
+        if (((Livre) titre).getQuantite() <= 0){
+            Input.AffMsgWindows("Il n'y a plus d'exemplaires disponibles pour ce livre.");
+            throw new SaisieException();
+        }
+
+        for(Pret pret : Liste.getPret()){
+            if(pret.getAbos().equals(utilisateur) && pret.getLivre().equals(titre)){
+                Input.AffMsgWindows("L'utilisateur a déjà un prêt sur ce livre");
+                throw new SaisieException();
+            }
         }
 
         Pret prets = new Pret(
@@ -281,6 +294,11 @@ public class BiblioApp extends JFrame {
                 Input.CreateDateNow(),
                 Input.EndDate()
         );
+
+        ((Livre) titre).setQuantite(((Livre) titre).getQuantite() - 1);
+// TODO test
+        listLivres.revalidate();
+        listLivres.repaint();
 
         Liste.addPret(prets);
 

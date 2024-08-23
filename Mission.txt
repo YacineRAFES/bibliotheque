@@ -1,6 +1,11 @@
 MISSION:
 
 - Ajoute quelque décoration sur l'application
-- Ajoute une barre de recherche dans chacun onglets
-- Quand on ajoute un pret d'un livre, la quantité change
+OK : Ajoute une barre de recherche dans chacun onglets
+OK : Quand on ajoute un pret d'un livre, la quantité change
 OK : Bugs : quand on va à onglet PRet, il actualise les deux combobox mais quand on retourne au Livre et on revient à l'onglet Pret, il crée les doublons
+- Ajouter les boutons dans la table Pret pour avoir recu le livre et supprime automatiquement la ligne pret
+- Si le livre n'est pas retourné, envoye automatiquement un mail à l'utilisateur et la ligne devient rouge
+- Ajouter les boutons pour supprimer et modifier l'abonné
+- Ajouter les boutons pour supprimer et modifier un livre
+- à l'accueil, ajout le nombre de livre de pret en cours

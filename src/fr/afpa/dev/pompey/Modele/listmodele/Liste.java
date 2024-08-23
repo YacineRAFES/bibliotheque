@@ -34,6 +34,7 @@ public class Liste {
     }
 
     public static void addPret(Pret pret) {
+
         getPret().add(pret);
     }
 }
