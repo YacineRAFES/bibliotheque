@@ -2,14 +2,16 @@ package fr.afpa.dev.pompey.Modele.datamodele;
 
 import fr.afpa.dev.pompey.Modele.Pret;
 
+import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 public class PretTableModel extends AbstractTableModel {
+    JButton button = new JButton("Edit");
     private final String[] ENTETE = new String[] {
-            "Nom/Prénom", "Email", "Livres", "Début Prêt", "Fin Prêt", "Se termine dans", "Modif"
+            "Nom/Prénom", "Email", "Livres", "Début Prêt", "Fin Prêt", "Se termine dans", "Action"
     };
     private final List<Pret> pret;
 
@@ -49,10 +51,16 @@ public class PretTableModel extends AbstractTableModel {
             case 5://Se termine
                 return ChronoUnit.DAYS.between(LocalDate.now(), prets.getDateFin())+ " jours";
             case 6:
-                return
+                return "Retourné";
             default:
                 return null;
         }
     }
+
+    public boolean isCellEditable(int row, int col)
+    {
+        return true;
+    }
+
 
 }

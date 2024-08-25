@@ -8,7 +8,7 @@ import java.util.List;
 public class LivreTableModel extends AbstractTableModel {
 
     private final String[] ENTETE = new String[] {
-            "Titre", "Auteur", "Quantite"
+            "Titre", "Auteur", "Quantite", "Action"
     };
 
     private final List<Livre> livre;
@@ -42,8 +42,14 @@ public class LivreTableModel extends AbstractTableModel {
                 return livres.getAuteur();
             case 2:
                 return livres.getQuantite();
+            case 3:
+                return "Supprimer";
             default:
                 return null;
         }
+    }
+    public boolean isCellEditable(int row, int col)
+    {
+        return true;
     }
 }

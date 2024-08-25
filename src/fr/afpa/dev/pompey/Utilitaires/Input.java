@@ -12,7 +12,6 @@ public class Input extends SaisieException {
 
     private Input(){
     }
-
     //Liste de REGEX
     private static final String REGEXNOMPRENOM = "^([a-zA-Za-zàáâäçèéêëìíîïñòóôöùúûü]+[,.]?[ ]?|[a-zA-Za-zàáâäçèéêëìíîïñòóôöùúûü]+[\\'-]?)+$";
     private static final String REGEXDATE = "^-\\d{2}-\\d{2}-\\d{4}$";

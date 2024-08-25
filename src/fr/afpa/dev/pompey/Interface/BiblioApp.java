@@ -75,6 +75,15 @@ public class BiblioApp extends JFrame {
     private JTextField barSearchFieldAbos;
 
     public BiblioApp() {
+        // TODO - Ajoute quelque décoration sur l'application
+        // TODO OK : Ajoute une barre de recherche dans chacun onglets
+        // TODO OK : Quand on ajoute un pret d'un livre, la quantité change
+        // TODO OK : Bugs : quand on va à onglet PRet, il actualise les deux combobox mais quand on retourne au Livre et on revient à l'onglet Pret, il crée les doublons
+        // TODO OK - Ajouter les boutons dans la table Pret pour avoir recu le livre et supprime automatiquement la ligne pret
+        // TODO - Si le livre n'est pas retourné, envoye automatiquement un mail à l'utilisateur et la ligne devient rouge
+        // TODO - Ajouter les boutons pour supprimer et modifier l'abonné
+        // TODO - Ajouter les boutons pour supprimer et modifier un livre
+        // TODO - à l'accueil, ajout le nombre de livre de pret en cours
         setTitle("Application");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setContentPane(contentPane);
@@ -91,8 +100,59 @@ public class BiblioApp extends JFrame {
         PretTableModel model3 = new PretTableModel(Liste.getPret());
         this.tablePret.setModel(model3);
 
+        tablePret.getColumn("Action").setCellRenderer(new button.ButtonRenderer());
+        tablePret.getColumn("Action").setCellEditor(new button.ButtonEditor(new JCheckBox(), new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int row = tablePret.getSelectedRow();
+                Pret pret = Liste.getPret().get(row);
+
+                // Marquer le livre comme retourné et supprimer la ligne
+                Liste.removePret(pret);
+                pret.getLivre().setQuantite(pret.getLivre().getQuantite() + 1);
+
+                new refreshTable(tablePret);
+
+                new refreshTable(listLivres);
+
+                Input.AffMsgWindows("Le livre a été retourné avec succès.");
+            }
+        }));
+
+        listLivres.getColumn("Action").setCellRenderer(new button.ButtonRenderer());
+        listLivres.getColumn("Action").setCellEditor(new button.ButtonEditor(new JCheckBox(), new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int row = listLivres.getSelectedRow();
+                Livre livre = Liste.getLivres().get(row);
+
+                Liste.removeLivre(livre);
+
+                new refreshTable(listLivres);
+
+                Input.AffMsgWindows("Le livre a été supprimer avec succès.");
+            }
+        }));
+
+        listAbos.getColumn("Action").setCellRenderer(new button.ButtonRenderer());
+        listAbos.getColumn("Action").setCellEditor(new button.ButtonEditor(new JCheckBox(), new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int row = listAbos.getSelectedRow();
+                Abos abos = Liste.getAbos().get(row);
+
+                Liste.removeAbos(abos);
+
+                new refreshTable(listAbos);
+
+                Input.AffMsgWindows("L'abonné a été supprimer avec succès.");
+            }
+        }));
+
         DefaultComboBoxModel<Abos> comboBoxModel1 = (DefaultComboBoxModel<Abos>) utilisateurComboBoxPret.getModel();
         DefaultComboBoxModel<Livre> comboBoxModel2 = (DefaultComboBoxModel<Livre>) livreComboBoxPret.getModel();
+
+
 
         // Abonnés
         validerButtonAbos.addActionListener(new ActionListener() {
@@ -213,8 +273,7 @@ public class BiblioApp extends JFrame {
         Liste.addAbos(abos);
 
         // Refresh l'interface
-        listAbos.revalidate();
-        listAbos.repaint();
+        new refreshTable(listAbos);
 
         Input.AffMsgWindows("Abonné enregistré avec succès.");
 
@@ -249,8 +308,7 @@ public class BiblioApp extends JFrame {
 
         Liste.addLivre(livres);
 
-        listLivres.revalidate();
-        listLivres.repaint();
+        new refreshTable(listLivres);
 
         Input.AffMsgWindows("Le Livre a été ajouté");
 
@@ -296,14 +354,12 @@ public class BiblioApp extends JFrame {
         );
 
         ((Livre) titre).setQuantite(((Livre) titre).getQuantite() - 1);
-// TODO test
-        listLivres.revalidate();
-        listLivres.repaint();
+
+        new refreshTable(listLivres);
 
         Liste.addPret(prets);
 
-        tablePret.revalidate();
-        tablePret.repaint();
+        new refreshTable(tablePret);
 
         Input.AffMsgWindows("Le Pret a été ajouté");
 

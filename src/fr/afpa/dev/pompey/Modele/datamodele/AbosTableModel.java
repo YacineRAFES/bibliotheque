@@ -8,7 +8,7 @@ import java.util.List;
 public class AbosTableModel extends AbstractTableModel {
 
     private final String[] ENTETE = new String[] {
-            "Nom", "Prénom", "Email", "Date d'inscription"
+            "Nom", "Prénom", "Email", "Date d'inscription", "Action"
     };
     private final List<Abos> abos;
 
@@ -43,8 +43,14 @@ public class AbosTableModel extends AbstractTableModel {
                 return abo.getEmailAbos();
             case 3:
                 return abo.getDateInscriptionAbos();
+            case 4:
+                return "Supprimer";
             default:
                 return null;
         }
+    }
+    public boolean isCellEditable(int row, int col)
+    {
+        return true;
     }
 }

@@ -9,7 +9,6 @@ import org.junit.jupiter.params.provider.NullSource;
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.assertj.core.api.Assertions.*;
 
 class AbosTest {
     private Abos abosUnderTest;

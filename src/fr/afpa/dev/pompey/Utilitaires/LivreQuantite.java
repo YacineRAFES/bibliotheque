@@ -7,5 +7,3 @@ public class LivreQuantite {
         this.quantite = quantite;
     }
 }
-
-//TODO ffff

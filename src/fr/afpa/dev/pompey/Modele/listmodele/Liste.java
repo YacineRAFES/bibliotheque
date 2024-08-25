@@ -29,12 +29,23 @@ public class Liste {
         getAbos().add(abos);
     }
 
+    public static void removeAbos(Abos abos) {
+        getAbos().remove(abos);
+    }
+
     public static void addLivre(Livre livre) {
         getLivres().add(livre);
+    }
+
+    public static void removeLivre(Livre livre) {
+        getLivres().remove(livre);
     }
 
     public static void addPret(Pret pret) {
 
         getPret().add(pret);
+    }
+    public static void removePret(Pret pret) {
+        getPret().remove(pret);
     }
 }
