@@ -1,6 +1,8 @@
 package fr.afpa.dev.pompey.Modele.datamodele;
 
 import fr.afpa.dev.pompey.Modele.Abos;
+import fr.afpa.dev.pompey.Modele.Livre;
+import fr.afpa.dev.pompey.exception.SaisieException;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.List;
@@ -52,5 +54,30 @@ public class AbosTableModel extends AbstractTableModel {
     public boolean isCellEditable(int row, int col)
     {
         return true;
+    }
+
+    public void setValueAt(Object aValue, int rowIndex, int columnIndex){
+        Abos abo = abos.get(rowIndex);
+        if(0 == columnIndex) {
+            try {
+                abo.setNomAbos((String) aValue);
+            } catch (SaisieException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        else if(1 == columnIndex) {
+            try {
+                abo.setPrenomAbos((String) aValue);
+            } catch (SaisieException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        else if(2 == columnIndex) {
+            try {
+                abo.setEmailAbos((String) aValue);
+            } catch (SaisieException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 }

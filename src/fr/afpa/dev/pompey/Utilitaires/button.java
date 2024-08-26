@@ -48,16 +48,5 @@ public class button {
             isPushed = false;
             return label;
         }
-
-        @Override
-        public boolean stopCellEditing() {
-            isPushed = false;
-            return super.stopCellEditing();
-        }
-
-        @Override
-        protected void fireEditingStopped() {
-            super.fireEditingStopped();
-        }
     }
 }

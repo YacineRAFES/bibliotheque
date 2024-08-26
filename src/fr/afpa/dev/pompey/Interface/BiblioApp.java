@@ -81,9 +81,10 @@ public class BiblioApp extends JFrame {
         // TODO OK : Bugs : quand on va à onglet PRet, il actualise les deux combobox mais quand on retourne au Livre et on revient à l'onglet Pret, il crée les doublons
         // TODO OK - Ajouter les boutons dans la table Pret pour avoir recu le livre et supprime automatiquement la ligne pret
         // TODO - Si le livre n'est pas retourné, envoye automatiquement un mail à l'utilisateur et la ligne devient rouge
-        // TODO - Ajouter les boutons pour supprimer et modifier l'abonné
-        // TODO - Ajouter les boutons pour supprimer et modifier un livre
+        // TODO - Ajouter les boutons pour supprimer  OK et modifier l'abonné A FAIRE
+        // TODO - Ajouter les boutons pour supprimer OK et modifier un livre A FAIRE
         // TODO - à l'accueil, ajout le nombre de livre de pret en cours
+
         setTitle("Application");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setContentPane(contentPane);

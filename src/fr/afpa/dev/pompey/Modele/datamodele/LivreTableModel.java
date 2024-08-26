@@ -1,6 +1,7 @@
 package fr.afpa.dev.pompey.Modele.datamodele;
 
 import fr.afpa.dev.pompey.Modele.Livre;
+import fr.afpa.dev.pompey.exception.SaisieException;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.List;
@@ -51,5 +52,25 @@ public class LivreTableModel extends AbstractTableModel {
     public boolean isCellEditable(int row, int col)
     {
         return true;
+    }
+    public void setValueAt(Object aValue, int rowIndex, int columnIndex){
+        Livre livres = livre.get(rowIndex);
+        if(0 == columnIndex) {
+            try {
+                livres.setTitre((String) aValue);
+            } catch (SaisieException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        else if(1 == columnIndex) {
+            try {
+                livres.setAuteur((String) aValue);
+            } catch (SaisieException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        else if(2 == columnIndex) {
+            livres.setQuantite((Integer) aValue);
+        }
     }
 }

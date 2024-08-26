@@ -1,6 +1,8 @@
 package fr.afpa.dev.pompey.Modele.datamodele;
 
+import fr.afpa.dev.pompey.Modele.Livre;
 import fr.afpa.dev.pompey.Modele.Pret;
+import fr.afpa.dev.pompey.exception.SaisieException;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
@@ -61,6 +63,5 @@ public class PretTableModel extends AbstractTableModel {
     {
         return true;
     }
-
 
 }
