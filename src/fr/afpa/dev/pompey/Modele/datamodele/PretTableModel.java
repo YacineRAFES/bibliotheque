@@ -61,7 +61,11 @@ public class PretTableModel extends AbstractTableModel {
 
     public boolean isCellEditable(int row, int col)
     {
-        return true;
+        if (col == 6) {
+            return true;
+        }else{
+            return false;
+        }
     }
 
 }

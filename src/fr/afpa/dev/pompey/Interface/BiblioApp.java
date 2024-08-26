@@ -13,6 +13,7 @@ import fr.afpa.dev.pompey.Utilitaires.*;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.table.AbstractTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -76,30 +77,28 @@ public class BiblioApp extends JFrame {
 
     public BiblioApp() {
         // TODO - Ajoute quelque décoration sur l'application
-        // TODO OK : Ajoute une barre de recherche dans chacun onglets
-        // TODO OK : Quand on ajoute un pret d'un livre, la quantité change
-        // TODO OK : Bugs : quand on va à onglet PRet, il actualise les deux combobox mais quand on retourne au Livre et on revient à l'onglet Pret, il crée les doublons
-        // TODO OK - Ajouter les boutons dans la table Pret pour avoir recu le livre et supprime automatiquement la ligne pret
         // TODO - Si le livre n'est pas retourné, envoye automatiquement un mail à l'utilisateur et la ligne devient rouge
-        // TODO - Ajouter les boutons pour supprimer  OK et modifier l'abonné A FAIRE
-        // TODO - Ajouter les boutons pour supprimer OK et modifier un livre A FAIRE
         // TODO - à l'accueil, ajout le nombre de livre de pret en cours
 
         setTitle("Application");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setContentPane(contentPane);
+        this.setResizable(false);
         pack();
 
         setLocationRelativeTo(null);
 
         AbosTableModel model1 = new AbosTableModel(Liste.getAbos());
         this.listAbos.setModel(model1);
+        this.listAbos.getTableHeader().setResizingAllowed(false);
 
         LivreTableModel model2 = new LivreTableModel(Liste.getLivres());
         this.listLivres.setModel(model2);
+        this.listLivres.getTableHeader().setResizingAllowed(false);
 
         PretTableModel model3 = new PretTableModel(Liste.getPret());
         this.tablePret.setModel(model3);
+        this.tablePret.getTableHeader().setResizingAllowed(false);
 
         tablePret.getColumn("Action").setCellRenderer(new button.ButtonRenderer());
         tablePret.getColumn("Action").setCellEditor(new button.ButtonEditor(new JCheckBox(), new ActionListener() {
@@ -308,6 +307,8 @@ public class BiblioApp extends JFrame {
                 Input.getInt(quantite));
 
         Liste.addLivre(livres);
+
+
 
         new refreshTable(listLivres);
 
