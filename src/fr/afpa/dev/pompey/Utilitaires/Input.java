@@ -24,7 +24,7 @@ public class Input extends SaisieException {
     //Affichage d'un message et lecture saisie de type de caractère
     public static String verifNomPrenom(String saisie, String type) throws SaisieException {
         if(!saisie.matches(REGEXNOMPRENOM)){
-            AffMsgWindows("Veuillez re-saisir votre " + type);
+            AffMsgWindows("Veuillez re-saisir le " + type);
             throw new SaisieException();
         }
 
@@ -42,7 +42,7 @@ public class Input extends SaisieException {
     //Affichage d'un message et lecture saisie d'email
     public static String getEmail(String saisie) throws SaisieException {
         if(!saisie.matches(REGEXEMAIL)){
-            AffMsgWindows("Veuillez re-saisir votre email par exemple : votrenom@domaine.com");
+            AffMsgWindows("Veuillez re-saisir l'email par exemple : votrenom@domaine.com");
             throw new SaisieException();
         }
         return saisie.toLowerCase();

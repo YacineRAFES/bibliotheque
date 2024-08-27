@@ -16,6 +16,7 @@ import javax.swing.event.ChangeListener;
 import javax.swing.table.AbstractTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Objects;
 
 import static fr.afpa.dev.pompey.Modele.Biblio.getAbos;
 import static fr.afpa.dev.pompey.Modele.Biblio.getLivres;
@@ -125,7 +126,12 @@ public class BiblioApp extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 int row = listLivres.getSelectedRow();
                 Livre livre = Liste.getLivres().get(row);
+                Pret pret = Liste.getPret().get(row);
 
+                if(Objects.equals(pret.getLivre().getTitre(), livre.getTitre())){
+                    Input.AffMsgWindows("Le Livre est associé un pret existant");
+                    return;
+                }
                 Liste.removeLivre(livre);
 
                 new refreshTable(listLivres);
@@ -140,7 +146,12 @@ public class BiblioApp extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 int row = listAbos.getSelectedRow();
                 Abos abos = Liste.getAbos().get(row);
+                Pret pret = Liste.getPret().get(row);
 
+                if(Objects.equals(pret.getAbos().getNomAbos(), abos.getNomAbos())){
+                    Input.AffMsgWindows("L'abonné est associé un pret existant");
+                    return;
+                }
                 Liste.removeAbos(abos);
 
                 new refreshTable(listAbos);
@@ -151,8 +162,6 @@ public class BiblioApp extends JFrame {
 
         DefaultComboBoxModel<Abos> comboBoxModel1 = (DefaultComboBoxModel<Abos>) utilisateurComboBoxPret.getModel();
         DefaultComboBoxModel<Livre> comboBoxModel2 = (DefaultComboBoxModel<Livre>) livreComboBoxPret.getModel();
-
-
 
         // Abonnés
         validerButtonAbos.addActionListener(new ActionListener() {

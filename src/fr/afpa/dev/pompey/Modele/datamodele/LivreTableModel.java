@@ -1,6 +1,7 @@
 package fr.afpa.dev.pompey.Modele.datamodele;
 
 import fr.afpa.dev.pompey.Modele.Livre;
+import fr.afpa.dev.pompey.Utilitaires.Input;
 import fr.afpa.dev.pompey.exception.SaisieException;
 
 import javax.swing.table.AbstractTableModel;
@@ -53,24 +54,21 @@ public class LivreTableModel extends AbstractTableModel {
     {
         return true;
     }
+    @Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex){
         Livre livres = livre.get(rowIndex);
-        if(0 == columnIndex) {
-            try {
-                livres.setTitre((String) aValue);
-            } catch (SaisieException e) {
-                throw new RuntimeException(e);
+        try{
+            if(0 == columnIndex) {
+                livres.setTitre(Input.getString((String) aValue));
             }
-        }
-        else if(1 == columnIndex) {
-            try {
-                livres.setAuteur((String) aValue);
-            } catch (SaisieException e) {
-                throw new RuntimeException(e);
+            else if(1 == columnIndex) {
+                livres.setAuteur(Input.verifNomPrenom((String) aValue, "nom/prénom"));
             }
-        }
-        else if(2 == columnIndex) {
-            livres.setQuantite((Integer) aValue);
+            else if(2 == columnIndex) {
+                livres.setQuantite(Input.getInt((String) aValue));
+            }
+        }catch(SaisieException e){
+            Input.AffMsgWindows("Une erreur est survenu");
         }
     }
 }

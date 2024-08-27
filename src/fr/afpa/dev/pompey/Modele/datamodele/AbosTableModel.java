@@ -2,6 +2,7 @@ package fr.afpa.dev.pompey.Modele.datamodele;
 
 import fr.afpa.dev.pompey.Modele.Abos;
 import fr.afpa.dev.pompey.Modele.Livre;
+import fr.afpa.dev.pompey.Utilitaires.Input;
 import fr.afpa.dev.pompey.exception.SaisieException;
 
 import javax.swing.table.AbstractTableModel;
@@ -55,29 +56,22 @@ public class AbosTableModel extends AbstractTableModel {
     {
         return true;
     }
-
+    @Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex){
         Abos abo = abos.get(rowIndex);
-        if(0 == columnIndex) {
-            try {
-                abo.setNomAbos((String) aValue);
-            } catch (SaisieException e) {
-                throw new RuntimeException(e);
+        try{
+            if(0 == columnIndex) {
+                abo.setNomAbos(Input.verifNomPrenom((String) aValue, "nom"));
             }
-        }
-        else if(1 == columnIndex) {
-            try {
-                abo.setPrenomAbos((String) aValue);
-            } catch (SaisieException e) {
-                throw new RuntimeException(e);
+            else if(1 == columnIndex) {
+                abo.setPrenomAbos(Input.verifNomPrenom((String) aValue, "prénom"));
             }
-        }
-        else if(2 == columnIndex) {
-            try {
-                abo.setEmailAbos((String) aValue);
-            } catch (SaisieException e) {
-                throw new RuntimeException(e);
+            else if(2 == columnIndex) {
+                abo.setEmailAbos(Input.getEmail((String) aValue));
             }
+        }catch (SaisieException e){
+            Input.AffMsgWindows("Une erreur est survenu");
         }
+
     }
 }
